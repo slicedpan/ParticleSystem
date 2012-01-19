@@ -43,6 +43,8 @@ double dist = - (farPlane - nearPlane) / 2;    // Set by mouse Y.
 CameraController* cameraController;
 FPSCamera* camera;
 
+int fps = 60;
+
 // This function is called to display the scene.
 
 void setup()
@@ -62,10 +64,27 @@ void setup()
 	glutSetCursor(GLUT_CURSOR_NONE);
 }
 
+int lastTime = 0;
+int frameCounter = 0;
+int frameTimeCount = 0;
+
 void display ()
 {
+	int currentTime = glutGet(GLUT_ELAPSED_TIME);
+	int elapsedTime = (currentTime - lastTime);
+	lastTime = currentTime;
 
-	cameraController->Update(16);	
+	++frameCounter;
+	frameTimeCount += elapsedTime;
+
+	if (frameTimeCount > 1000)
+	{
+		frameTimeCount = 0;
+		fps = frameCounter;
+		frameCounter = 0;
+	}
+
+	cameraController->Update((float)elapsedTime);	
 
  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -168,7 +187,7 @@ void idle ()
 		setprecision(3) << "Mouse at (" << xMouse << ", " << yMouse << 
 		setprecision(0) << ").  Alpha=" << setw(3) << alpha << 
 		".  Beta=" << setw(3) << beta <<
-		setprecision(2) << ".  dist=" << dist <<
+		setprecision(2) << ".  fps=" << fps <<
 		"." << ends;
 	glutSetWindowTitle(buffer);
 

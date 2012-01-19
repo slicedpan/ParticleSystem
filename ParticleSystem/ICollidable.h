@@ -9,6 +9,6 @@ class ICollidable
 {
 public:
 	virtual bool PointIntersects(Vec3 point) = 0;
-	virtual bool Intersects(Sphere* other) = 0;	
+	virtual bool PointWithinDistance(Vec3 point, float dist) = 0;	
 };
 
