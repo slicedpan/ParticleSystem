@@ -26,12 +26,16 @@ CameraController::~CameraController(void)
 void CameraController::Update(float msSinceLastUpdate)
 {
 	float timeFactor = msSinceLastUpdate / 16.0f;
+
 	if (camera != 0)
 	{
-		camera->Position += velocity * timeFactor;
+		if (len(velocity) > 1.0f)
+			norm(velocity);
+
+		camera->Position += velocity;
 		if (HasMomentum)
 		{
-			velocity *= (1.0f - LinearFriction) / timeFactor;
+			velocity *= (1.0f - LinearFriction);
 		}
 		else
 		{
@@ -47,8 +51,8 @@ void CameraController::Update(float msSinceLastUpdate)
 			forwardVec = camera->GetForwardVector();
 		}
 
-		camera->Pitch += pitchVel * timeFactor;
-		camera->Yaw += yawVel * timeFactor;
+		camera->Pitch += pitchVel;
+		camera->Yaw += yawVel;
 
 		if (camera->Pitch >= maxPitch)
 			camera->Pitch = maxPitch;
@@ -57,8 +61,8 @@ void CameraController::Update(float msSinceLastUpdate)
 
 		if (HasAngularMomentum)
 		{
-			pitchVel *= (1.0f - AngularFriction) / timeFactor;
-			yawVel *= (1.0f - AngularFriction) / timeFactor;
+			pitchVel *= (1.0f - AngularFriction);
+			yawVel *= (1.0f - AngularFriction);
 		}
 		else
 		{

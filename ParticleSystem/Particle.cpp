@@ -5,6 +5,7 @@ Particle::Particle(Vec3 position, Vec3 velocity, float mass)
 	this->position = position;
 	this->velocity = velocity;
 	this->mass = mass;
+	this->forceAccumulation.MakeZero();
 }
 
 Particle::~Particle(void)

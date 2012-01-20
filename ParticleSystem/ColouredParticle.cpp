@@ -1,5 +1,6 @@
 #include "ColouredParticle.h"
 #include "glut.h"
+#include <svl\SVLgl.h>
 
 ColouredParticle::ColouredParticle() : Particle(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), 1.0f)
 {
@@ -28,7 +29,7 @@ void ColouredParticle::Update(float msElapsed)
 	if (alpha > 0.0f)
 	{
 		currentLifetime -= msElapsed;
-		this->alpha = (float)currentLifetime / lifetime;
+		this->alpha = sqrt((float)currentLifetime / lifetime);
 		Particle::Update(msElapsed);
 	}
 }
@@ -36,4 +37,10 @@ void ColouredParticle::Update(float msElapsed)
 inline bool ColouredParticle::IsRecyclable()
 {
 	return (alpha >= 0.0f);
+}
+
+void ColouredParticle::Draw()
+{
+	glColor4f(Colour[0], Colour[1], Colour[2], alpha);
+	glVertex(position);
 }

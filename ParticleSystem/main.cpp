@@ -9,12 +9,14 @@
 #include <glut.h>
 #include "../FPSCamera/FPSCamera.h"
 #include "../FPSCamera/CameraController.h"
+#include "Plane.h"
+#include "ParticleSystem.h"
 
 using namespace std;
 
 // Initial size of graphics window.
-const int WIDTH  = 600;
-const int HEIGHT = 400;
+const int WIDTH  = 1200;
+const int HEIGHT = 800;
 
 // Current size of window.
 int width  = WIDTH;
@@ -45,6 +47,9 @@ FPSCamera* camera;
 
 int fps = 60;
 
+Plane * groundPlane;
+ColouredParticleSystem* particleSystem;
+
 // This function is called to display the scene.
 
 void setup()
@@ -62,6 +67,8 @@ void setup()
 		keystate[i] = false;
 	}
 	glutSetCursor(GLUT_CURSOR_NONE);
+	groundPlane = new Plane(Vec3(0.0, 1.0, 0.0), Vec3(0.0, 0.0, 0.0));
+	particleSystem = new ColouredParticleSystem(Vec3(0.0, 3.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 1.0, 1.0), 5000, 500);
 }
 
 int lastTime = 0;
@@ -85,32 +92,18 @@ void display ()
 	}
 
 	cameraController->Update((float)elapsedTime);	
+	particleSystem->Update((float)elapsedTime);
 
  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-   /*
-   dist = - (yMouse * (farPlane - nearPlane) + nearPlane);
-   glTranslatef(0, 0, dist);
+	glMultMatrixf(camera->GetViewTransform().Ref()); //apply camera transform
 
-   // Rotation from idle function.
-   glRotatef(alpha, 0, 1, 0);
-   
-   // Rotation using X mouse.
-   beta = 180.0 * xMouse;
-   glRotatef(beta, 1, 0, 0);
-
-   */
-
-	glMultMatrixf(camera->GetViewTransform().Ref());
-	//glTranslatef(-camera->Position[0], -camera->Position[1], -camera->Position[2]);
-	if (camera->Position[2] > 0.0f)
-	{
-		int i = 0;
-	}
-
-   // Draw model axes.
+	groundPlane->Draw();
+	particleSystem->Draw();
+	/*
+	//Draw model axes.
 	glBegin(GL_LINES);
 		// X axis
 		glColor3f(1, 0, 0);
@@ -125,10 +118,7 @@ void display ()
 		glVertex3f(0, 0, 0);
 		glVertex3f(0, 0, 2);
 	glEnd();
-
-   // Draw an object.
-	glColor3f(0, 1, 1);
-	glutWireSphere(1, 20, 20);
+	*/
 
 	glutSwapBuffers();
 }
@@ -164,6 +154,8 @@ void HandleInput()
 
 	if (keystate[27])
 		exit(0);
+	if (keystate['h'])
+		int i = 0;
 }
 
 // This function is called when there is nothing else to do.
@@ -184,8 +176,8 @@ void idle ()
 	ostrstream s(buffer, BUFSIZE);
 	s << 
 		resetiosflags(ios::floatfield) << setiosflags(ios::fixed) << 
-		setprecision(3) << "Mouse at (" << xMouse << ", " << yMouse << 
-		setprecision(0) << ").  Alpha=" << setw(3) << alpha << 
+		setprecision(3) << "Camera pitch, yaw: " << camera->Pitch << ", " << camera->Yaw << 
+		setprecision(0) << ").  Position=" << setw(3) << camera->Position[0] << ", " << camera->Position[1] << ", " << camera->Position[2] <<
 		".  Beta=" << setw(3) << beta <<
 		setprecision(2) << ".  fps=" << fps <<
 		"." << ends;

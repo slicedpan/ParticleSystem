@@ -2,7 +2,7 @@
 
 #include "Particle.h"
 
-class ColouredParticle : Particle
+class ColouredParticle : public Particle
 {
 public:
 	ColouredParticle();
