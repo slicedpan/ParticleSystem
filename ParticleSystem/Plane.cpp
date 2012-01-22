@@ -15,27 +15,6 @@ Plane::~Plane(void)
 {
 }
 
-inline float Plane::GetDistanceTo(Vec3 point)
-{
-	point -= position;
-	return dot(point, normal);
-}
-
-inline Vec3 Plane::GetNormal()
-{
-	return normal;
-}
-
-inline bool Plane::PointIntersects(Vec3 point)
-{
-	return (GetDistanceTo(point) < 0.0);
-}
-
-inline bool Plane::PointWithinDistance(Vec3 point, float dist)
-{
-	return (fabs(GetDistanceTo(point)) < dist);
-}
-
 Vec3 Plane::GetRestoringForce(Vec3 point)
 {
 	return -normal * GetDistanceTo(point);
@@ -62,5 +41,4 @@ void Plane::Draw()
 		glVertex(position + (-v1 + v2) * 100.0f);
 		glVertex(position + (-v1 - v2) * 100.0f);
 	glEnd();
-
 }

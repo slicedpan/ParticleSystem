@@ -35,11 +35,6 @@ void ColouredParticle::Update(float msElapsed)
 	}
 }
 
-inline bool ColouredParticle::IsRecyclable()
-{
-	return (alpha >= 0.0f);
-}
-
 void ColouredParticle::Draw()
 {
 	glColor4f(Colour[0], Colour[1], Colour[2], alpha);

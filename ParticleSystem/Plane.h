@@ -8,11 +8,24 @@ class Plane : public ICollidable
 public:
 	Plane(Vec3 normal, Vec3 position);
 	~Plane(void);
-	float GetDistanceTo(Vec3 point);
+	inline float GetDistanceTo(Vec3 point)
+	{
+		point -= position;
+		return dot(point, normal);
+	}
 	void Draw();
-	Vec3 GetNormal();
-	bool PointIntersects(Vec3 point);
-	bool PointWithinDistance(Vec3 point, float dist);
+	inline Vec3 GetNormal()
+	{
+		return normal;
+	}
+	inline bool PointIntersects(Vec3 point)
+	{	
+		return (GetDistanceTo(point) < 0.0);
+	}
+	inline bool PointWithinDistance(Vec3 point, float dist)
+	{
+		return (fabs(GetDistanceTo(point)) < dist);
+	}
 	Vec3 GetRestoringForce(Vec3 point);
 private:
 	Vec3 normal;
