@@ -1,6 +1,7 @@
 #include "Plane.h"
 #include <glut.h>
 #include <svl\SVLgl.h>
+#include "Contact.h"
 
 Plane::Plane(Vec3 normal, Vec3 position)
 {
@@ -18,6 +19,14 @@ Plane::~Plane(void)
 Vec3 Plane::GetRestoringForce(Vec3 point)
 {
 	return -normal * GetDistanceTo(point);
+}
+
+Contact * Plane::GetContact(Vec3 point)
+{
+	Contact * contact = new Contact();
+	contact->Point = point - dot(normal, point) * normal;
+	contact->Normal = normal;
+	return contact;
 }
 
 void Plane::Draw()

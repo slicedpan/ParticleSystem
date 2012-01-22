@@ -2,6 +2,7 @@
 #include "ColouredParticle.h"
 #include "PhysicsSystem.h"
 #include "ICollidable.h"
+#include "Contact.h"
 #include <cstdlib>
 #include <glut.h>
 
@@ -45,14 +46,16 @@ void ColouredParticleSystem::Update(float msSinceLast)
 	}
 	for (int i = 0; i < particles.size(); ++i)
 	{	
-		particles[i]->AddForce(particles[i]->GetVelocity() * -0.001f); //drag/friction
-		particles[i]->AddForce(Vec3(0.0, -0.01f, 0.0));
+		particles[i]->AddForce(Vec3(0.0, -0.01f, 0.0)); //gravity
 		ICollidable * coll;
 		if (coll = PhysicsSystem::GetCurrentInstance()->CollideWith(particles[i]->GetPosition()))
 		{
-			//TODO cancel force parallel to plane normal
-			particles[i]->AddForce(coll->GetRestoringForce(particles[i]->GetPosition()) * 1.0f);
+			Contact* contact = coll->GetContact(particles[i]->GetPosition());
+			particles[i]->SetPosition(contact->Point);
+			particles[i]->SetVelocity(-reflect(particles[i]->GetVelocity(), contact->Normal) * particles[i]->Restitution);
+			particles[i]->ClearForces();
 		}
+		particles[i]->AddForce(particles[i]->GetVelocity() * -0.001f); //drag/friction
 		particles[i]->Update(msSinceLast);
 	}
 }
@@ -75,7 +78,7 @@ void ColouredParticleSystem::CreateParticle()
 			particleCounter = 0;
 	}
 	cp->Initialise(pos, vel, 1.0f, particleLifetime);
-	cp->Colour = colour + RandomVector(0.05f);
+	cp->Colour = colour + RandomVector(0.5f);
 }
 
 void ColouredParticleSystem::Draw()

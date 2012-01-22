@@ -8,6 +8,7 @@ ColouredParticle::ColouredParticle() : Particle(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0
 	this->alpha = 0.0f;
 	this->lifetime = 16.0f;
 	this->currentLifetime = lifetime;
+	this->Restitution = 0.8f;
 }
 
 ColouredParticle::~ColouredParticle(void)
@@ -39,4 +40,9 @@ void ColouredParticle::Draw()
 {
 	glColor4f(Colour[0], Colour[1], Colour[2], alpha);
 	glVertex(position);
+}
+
+void ColouredParticle::ReflectForce(Vec3 &normal)
+{
+	forceAccumulation = reflect(forceAccumulation, normal) * Restitution;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 class ICollidable;
+struct Contact;
 
 #include <vector>
 #include <svl\SVL.h>
@@ -8,7 +9,6 @@ class ICollidable;
 class PhysicsSystem
 {
 public:
-	PhysicsSystem(void);
 	~PhysicsSystem(void);
 	static PhysicsSystem * GetCurrentInstance();
 	void AddCollidable(ICollidable* obj);
@@ -16,5 +16,6 @@ public:
 private:
 	static PhysicsSystem * currentInstance;
 	std::vector<ICollidable*> collidables;
+	PhysicsSystem(void);
 };
 

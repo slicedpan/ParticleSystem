@@ -17,6 +17,14 @@ public:
 	{
 		return position;
 	}
+	inline void SetPosition(const Vec3 &p)
+	{
+		position = p;
+	}
+	inline void ClearForces()
+	{
+		forceAccumulation.MakeZero();
+	}
 protected:
 	Vec3 position;
 	Vec3 velocity;

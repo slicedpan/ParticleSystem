@@ -1,5 +1,6 @@
 #include "PhysicsSystem.h"
 #include "ICollidable.h"
+#include "Contact.h"
 
 PhysicsSystem * PhysicsSystem::currentInstance;
 

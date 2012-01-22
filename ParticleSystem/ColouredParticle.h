@@ -15,6 +15,16 @@ public:
 		return (alpha >= 0.0f);
 	}
 	void Draw();
+	void ReflectForce(Vec3 &normal);
+	float Restitution;
+	inline void SetVelocity(Vec3 &vel)
+	{
+		velocity = vel;
+	}
+	inline Vec3& GetVelocity()
+	{
+		return velocity;
+	}
 private:
 	float alpha;
 	int lifetime;

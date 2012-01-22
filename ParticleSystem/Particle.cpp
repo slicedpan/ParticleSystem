@@ -21,5 +21,5 @@ void Particle::Update(float msElapsed)
 {
 	velocity += forceAccumulation / mass;
 	position += velocity;
-	forceAccumulation.MakeZero();
+	ClearForces();
 }

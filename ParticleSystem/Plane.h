@@ -27,6 +27,7 @@ public:
 		return (fabs(GetDistanceTo(point)) < dist);
 	}
 	Vec3 GetRestoringForce(Vec3 point);
+	Contact * GetContact(Vec3 point);
 private:
 	Vec3 normal;
 	Vec3 position;
