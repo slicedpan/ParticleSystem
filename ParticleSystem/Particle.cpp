@@ -12,16 +12,6 @@ Particle::~Particle(void)
 {
 }
 
-inline Vec3 Particle::GetPosition()
-{
-	return position;
-}
-
-inline Vec3 Particle::GetVelocity()
-{
-	return velocity;
-}
-
 void Particle::AddForce(Vec3 forceVector)
 {
 	forceAccumulation += forceVector;

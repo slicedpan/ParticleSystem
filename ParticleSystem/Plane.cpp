@@ -26,6 +26,21 @@ inline Vec3 Plane::GetNormal()
 	return normal;
 }
 
+inline bool Plane::PointIntersects(Vec3 point)
+{
+	return (GetDistanceTo(point) < 0.0);
+}
+
+inline bool Plane::PointWithinDistance(Vec3 point, float dist)
+{
+	return (fabs(GetDistanceTo(point)) < dist);
+}
+
+Vec3 Plane::GetRestoringForce(Vec3 point)
+{
+	return -normal * GetDistanceTo(point);
+}
+
 void Plane::Draw()
 {
 	glBegin(GL_LINES);

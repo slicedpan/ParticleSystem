@@ -22,6 +22,7 @@ void ColouredParticle::Initialise(Vec3 position, Vec3 velocity, float mass, int 
 	this->lifetime = lifetime;
 	this->currentLifetime = lifetime;
 	this->alpha = 1.0f;
+	this->forceAccumulation.MakeZero();
 }
 
 void ColouredParticle::Update(float msElapsed)
