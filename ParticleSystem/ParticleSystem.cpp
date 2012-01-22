@@ -46,16 +46,18 @@ void ColouredParticleSystem::Update(float msSinceLast)
 	}
 	for (int i = 0; i < particles.size(); ++i)
 	{	
-		particles[i]->AddForce(Vec3(0.0, -0.01f, 0.0)); //gravity
+		particles[i]->AddForce(Vec3(0.0, -10.0f, 0.0)); //gravity
 		ICollidable * coll;
 		if (coll = PhysicsSystem::GetCurrentInstance()->CollideWith(particles[i]->GetPosition()))
 		{
 			Contact* contact = coll->GetContact(particles[i]->GetPosition());
 			particles[i]->SetPosition(contact->Point);
 			particles[i]->SetVelocity(-reflect(particles[i]->GetVelocity(), contact->Normal) * particles[i]->Restitution);
+			if (len(particles[i]->GetVelocity()) < 0.005f)
+				particles[i]->SetVelocity(Vec3(0.0, 0.0, 0.0));
 			particles[i]->ClearForces();
 		}
-		particles[i]->AddForce(particles[i]->GetVelocity() * -0.001f); //drag/friction
+		particles[i]->AddForce(particles[i]->GetVelocity() * -0.1f); //drag/friction
 		particles[i]->Update(msSinceLast);
 	}
 }
@@ -86,7 +88,7 @@ void ColouredParticleSystem::Draw()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_POINT_SMOOTH);
-	glPointSize(3.0f);
+	glPointSize(5.0f);
 	for (int i = 0; i < particles.size(); ++i)
 	{
 		glBegin(GL_POINTS);

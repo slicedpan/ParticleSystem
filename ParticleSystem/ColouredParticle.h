@@ -20,6 +20,7 @@ public:
 	inline void SetVelocity(Vec3 &vel)
 	{
 		velocity = vel;
+		lastPosition = position - vel;
 	}
 	inline Vec3& GetVelocity()
 	{

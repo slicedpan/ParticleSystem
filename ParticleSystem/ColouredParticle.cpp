@@ -19,6 +19,7 @@ void ColouredParticle::Initialise(Vec3 position, Vec3 velocity, float mass, int 
 {
 	this->position = position;
 	this->velocity = velocity;
+	this->lastPosition = position - velocity;
 	this->mass = mass;
 	this->lifetime = lifetime;
 	this->currentLifetime = lifetime;

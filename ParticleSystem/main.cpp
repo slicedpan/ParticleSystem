@@ -70,7 +70,7 @@ void setup()
 	glutSetCursor(GLUT_CURSOR_NONE);
 	groundPlane = new Plane(Vec3(0.0, 1.0, 0.0), Vec3(0.0, 0.0, 0.0));
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(groundPlane);
-	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 1.0, 1.0), 1000, 50);
+	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.4, 1.0), 1000, 35);
 }
 
 int lastTime = 0;

@@ -44,10 +44,10 @@ void Plane::Draw()
 	glEnd();
 
 	glBegin(GL_QUADS);
-		glColor3f(0.5, 0.5, 0.0);
-		glVertex(position + (v1 - v2) * 100.0f);
-		glVertex(position + (v1 + v2) * 100.0f);
-		glVertex(position + (-v1 + v2) * 100.0f);
-		glVertex(position + (-v1 - v2) * 100.0f);
+		glColor3f(0.3, 0.3, 0.3);
+		glVertex(position + (v1 - v2) * 1000.0f);
+		glVertex(position + (v1 + v2) * 1000.0f);
+		glVertex(position + (-v1 + v2) * 1000.0f);
+		glVertex(position + (-v1 - v2) * 1000.0f);
 	glEnd();
 }

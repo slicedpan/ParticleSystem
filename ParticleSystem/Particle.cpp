@@ -3,6 +3,7 @@
 Particle::Particle(Vec3 position, Vec3 velocity, float mass)
 {
 	this->position = position;
+	this->lastPosition = position - velocity;
 	this->velocity = velocity;
 	this->mass = mass;
 	this->forceAccumulation.MakeZero();
@@ -19,7 +20,9 @@ void Particle::AddForce(Vec3 forceVector)
 
 void Particle::Update(float msElapsed)
 {
-	velocity += forceAccumulation / mass;
-	position += velocity;
+	Vec3 tmp = position;
+	position = (2 * position - lastPosition) + (forceAccumulation / mass) * 0.000256f;
+	lastPosition = tmp;
+	velocity = position - tmp;
 	ClearForces();
 }
