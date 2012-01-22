@@ -53,7 +53,7 @@ void ColouredParticleSystem::Update(float msSinceLast)
 			Contact* contact = coll->GetContact(particles[i]->GetPosition());
 			particles[i]->SetPosition(contact->Point);
 			particles[i]->SetVelocity(-reflect(particles[i]->GetVelocity(), contact->Normal) * particles[i]->Restitution);
-			if (len(particles[i]->GetVelocity()) < 0.005f)
+			if (len(particles[i]->GetVelocity()) < 0.01f)
 				particles[i]->SetVelocity(Vec3(0.0, 0.0, 0.0));
 			particles[i]->ClearForces();
 		}
@@ -80,7 +80,7 @@ void ColouredParticleSystem::CreateParticle()
 			particleCounter = 0;
 	}
 	cp->Initialise(pos, vel, 1.0f, particleLifetime);
-	cp->Colour = colour + RandomVector(0.5f);
+	cp->Colour = colour + RandomVector(1.0f);
 }
 
 void ColouredParticleSystem::Draw()

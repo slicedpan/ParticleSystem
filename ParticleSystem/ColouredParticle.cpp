@@ -41,6 +41,10 @@ void ColouredParticle::Draw()
 {
 	glColor4f(Colour[0], Colour[1], Colour[2], alpha);
 	glVertex(position);
+	glColor4f(Colour[0], Colour[1], Colour[2], alpha / 2.0f);
+	glVertex(position + (lastPosition - position) * 1.8f);
+	glColor4f(Colour[0], Colour[1], Colour[2], alpha / 3.0f);
+	glVertex(position + (lastPosition - position) * 3.6f);
 }
 
 void ColouredParticle::ReflectForce(Vec3 &normal)
