@@ -9,6 +9,7 @@ ColouredParticle::ColouredParticle() : Particle(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0
 	this->lifetime = 16.0f;
 	this->currentLifetime = lifetime;
 	this->Restitution = 0.8f;
+	this->Asleep = true;
 }
 
 ColouredParticle::~ColouredParticle(void)
@@ -25,11 +26,12 @@ void ColouredParticle::Initialise(Vec3 position, Vec3 velocity, float mass, int 
 	this->currentLifetime = lifetime;
 	this->alpha = 1.0f;
 	this->forceAccumulation.MakeZero();
+	this->Asleep = false;
 }
 
 void ColouredParticle::Update(float msElapsed)
 {
-	if (alpha > 0.0f)
+	if (alpha > 0.0f && !Asleep)
 	{
 		currentLifetime -= msElapsed;
 		this->alpha = sqrt((float)currentLifetime / lifetime);

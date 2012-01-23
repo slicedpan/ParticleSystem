@@ -51,6 +51,8 @@ void ColouredParticleSystem::Update(float msSinceLast)
 	}
 	for (int i = 0; i < particles.size(); ++i)
 	{	
+		if (particles[i]->Asleep)
+			continue;
 		for (int j = 0; j < forces.size(); ++j)
 		{
 			forces[j]->ApplyForce(particles[i]);
@@ -62,7 +64,10 @@ void ColouredParticleSystem::Update(float msSinceLast)
 			particles[i]->SetPosition(contact->Point);
 			particles[i]->SetVelocity(-reflect(particles[i]->GetVelocity(), contact->Normal) * particles[i]->Restitution);
 			if (len(particles[i]->GetVelocity()) < 0.01f)
+			{
 				particles[i]->SetVelocity(Vec3(0.0, 0.0, 0.0));
+				particles[i]->Asleep = true;
+			}
 			particles[i]->ClearForces();
 		}
 		particles[i]->AddForce(particles[i]->GetVelocity() * -0.1f); //drag/friction

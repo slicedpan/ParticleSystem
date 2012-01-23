@@ -75,14 +75,15 @@ void setup()
 	glutSetCursor(GLUT_CURSOR_NONE);
 	groundPlane = new Plane(Vec3(0.0, 1.0, 0.0), Vec3(0.0, 0.0, 0.0));
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(groundPlane);
-	box = new Box(Vec3(16.0, 2.0, 0.0), Vec3(10.0, 4.0, 10.0));
-	box2 = new Box(Vec3(20.0, 6.0, 0.0), Vec3(1.0, 5.0, 5.0));
-	box2->Colour = Vec3(0.0, 0.2, 0.8);
+	box = new Box(Vec3(0.0, 2.0, 10.0), Vec3(10.0, 4.0, 10.0));
+	box->Colour = Vec3(0.5, 0.0, 0.0);
+	box2 = new Box(Vec3(0.0, 6.5, 10.0), Vec3(1.0, 5.0, 5.0));
+	box2->Colour = Vec3(0.0, 0.1, 0.4);
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(box);
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(box2);
-	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.2, 1.0), 1000, 35);
+	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.2, 1.0), 2000, 115);
 	particleSystem->AddForce(new GravitationalForce(Vec3(0.0f, -10.0f, 0.0f)));
-	//particleSystem->AddForce(new CentralForce(Vec3(0.0, 5.0, 10.0), 3.0f));	
+	particleSystem->AddForce(new CentralForce(Vec3(0.0, 5.0, 10.0), 3.0f));	
 }
 
 int lastTime = 0;
@@ -115,9 +116,10 @@ void display ()
 	glMultMatrixf(camera->GetViewTransform().Ref()); //apply camera transform
 
 	groundPlane->Draw();
-	particleSystem->Draw();
 	box->Draw();
 	box2->Draw();
+	particleSystem->Draw();
+
 	/*
 	//Draw model axes.
 	glBegin(GL_LINES);
@@ -194,7 +196,7 @@ void idle ()
 		resetiosflags(ios::floatfield) << setiosflags(ios::fixed) << 
 		setprecision(3) << "Camera pitch, yaw: " << camera->Pitch << ", " << camera->Yaw << 
 		setprecision(0) << ").  Position=" << setw(3) << camera->Position[0] << ", " << camera->Position[1] << ", " << camera->Position[2] <<
-		".  Beta=" << setw(3) << beta <<
+		".  No. of particles=" << setw(3) << particleSystem->GetParticleNum() <<
 		setprecision(2) << ".  fps=" << fps <<
 		"." << ends;
 	glutSetWindowTitle(buffer);

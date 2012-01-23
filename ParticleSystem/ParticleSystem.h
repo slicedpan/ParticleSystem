@@ -17,6 +17,10 @@ public:
 	{
 		forces.push_back(force);
 	}
+	inline int GetParticleNum()
+	{
+		return particles.size();
+	}
 private:
 	std::vector<ColouredParticle*> particles;
 	std::vector<IForceField*> forces;

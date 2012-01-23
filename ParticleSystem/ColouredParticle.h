@@ -26,6 +26,7 @@ public:
 	{
 		return velocity;
 	}
+	bool Asleep;
 private:
 	float alpha;
 	int lifetime;
