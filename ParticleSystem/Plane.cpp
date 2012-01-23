@@ -21,7 +21,7 @@ Vec3 Plane::GetRestoringForce(Vec3 point)
 	return -normal * GetDistanceTo(point);
 }
 
-Contact * Plane::GetContact(Vec3 point)
+Contact * Plane::GetContact(Vec3& point)
 {
 	Contact * contact = new Contact();
 	contact->Point = point - dot(normal, point) * normal;

@@ -25,11 +25,11 @@ public:
 	{
 		forceAccumulation.MakeZero();
 	}
+	float mass;
 protected:
 	Vec3 position;
 	Vec3 lastPosition;
 	Vec3 velocity;
-	float mass;
 	Vec3 forceAccumulation;
 };
 

@@ -4,6 +4,7 @@
 #include <svl\SVL.h>
 
 class ColouredParticle;
+class IForceField;
 
 class ColouredParticleSystem
 {
@@ -12,8 +13,13 @@ public:
 	~ColouredParticleSystem(void);
 	void Update(float msSinceLast);
 	void Draw();
+	inline void AddForce(IForceField* force)
+	{
+		forces.push_back(force);
+	}
 private:
 	std::vector<ColouredParticle*> particles;
+	std::vector<IForceField*> forces;
 	Vec3 position, velocity, colour;
 	int particleNum;
 	int msCounter;

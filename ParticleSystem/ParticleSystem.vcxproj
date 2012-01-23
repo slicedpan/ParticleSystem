@@ -62,7 +62,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CentralForce.cpp" />
     <ClCompile Include="ColouredParticle.cpp" />
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="GravitationalForce.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -70,9 +73,13 @@
     <ClCompile Include="Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CentralForce.h" />
     <ClInclude Include="ColouredParticle.h" />
     <ClInclude Include="Contact.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="GravitationalForce.h" />
     <ClInclude Include="ICollidable.h" />
+    <ClInclude Include="IForceField.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PhysicsSystem.h" />

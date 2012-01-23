@@ -18,16 +18,16 @@ public:
 	{
 		return normal;
 	}
-	inline bool PointIntersects(Vec3 point)
+	inline bool PointIntersects(Vec3& point)
 	{	
 		return (GetDistanceTo(point) < 0.0);
 	}
-	inline bool PointWithinDistance(Vec3 point, float dist)
+	inline bool PointWithinDistance(Vec3& point, float dist)
 	{
 		return (fabs(GetDistanceTo(point)) < dist);
 	}
 	Vec3 GetRestoringForce(Vec3 point);
-	Contact * GetContact(Vec3 point);
+	Contact * GetContact(Vec3& point);
 private:
 	Vec3 normal;
 	Vec3 position;

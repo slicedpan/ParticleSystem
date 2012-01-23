@@ -13,12 +13,7 @@ PhysicsSystem::~PhysicsSystem(void)
 {
 }
 
-PhysicsSystem* PhysicsSystem::GetCurrentInstance()
-{
-	if (currentInstance == 0)
-		currentInstance = new PhysicsSystem();
-	return currentInstance;
-}
+
 
 void PhysicsSystem::AddCollidable(ICollidable* obj)
 {

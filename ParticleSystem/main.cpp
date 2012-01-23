@@ -12,6 +12,9 @@
 #include "Plane.h"
 #include "ParticleSystem.h"
 #include "PhysicsSystem.h"
+#include "GravitationalForce.h"
+#include "CentralForce.h"
+#include "Box.h"
 
 using namespace std;
 
@@ -50,6 +53,8 @@ int fps = 60;
 
 Plane * groundPlane;
 ColouredParticleSystem* particleSystem;
+Box * box;
+Box * box2;
 
 // This function is called to display the scene.
 
@@ -70,7 +75,14 @@ void setup()
 	glutSetCursor(GLUT_CURSOR_NONE);
 	groundPlane = new Plane(Vec3(0.0, 1.0, 0.0), Vec3(0.0, 0.0, 0.0));
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(groundPlane);
-	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.4, 1.0), 1000, 35);
+	box = new Box(Vec3(16.0, 2.0, 0.0), Vec3(10.0, 4.0, 10.0));
+	box2 = new Box(Vec3(20.0, 6.0, 0.0), Vec3(1.0, 5.0, 5.0));
+	box2->Colour = Vec3(0.0, 0.2, 0.8);
+	PhysicsSystem::GetCurrentInstance()->AddCollidable(box);
+	PhysicsSystem::GetCurrentInstance()->AddCollidable(box2);
+	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.2, 1.0), 1000, 35);
+	particleSystem->AddForce(new GravitationalForce(Vec3(0.0f, -10.0f, 0.0f)));
+	//particleSystem->AddForce(new CentralForce(Vec3(0.0, 5.0, 10.0), 3.0f));	
 }
 
 int lastTime = 0;
@@ -104,6 +116,8 @@ void display ()
 
 	groundPlane->Draw();
 	particleSystem->Draw();
+	box->Draw();
+	box2->Draw();
 	/*
 	//Draw model axes.
 	glBegin(GL_LINES);

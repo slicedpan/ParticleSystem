@@ -3,6 +3,7 @@
 #include "PhysicsSystem.h"
 #include "ICollidable.h"
 #include "Contact.h"
+#include "IForceField.h"
 #include <cstdlib>
 #include <glut.h>
 
@@ -21,6 +22,10 @@ ColouredParticleSystem::ColouredParticleSystem(Vec3 position, Vec3 velocity, Vec
 
 ColouredParticleSystem::~ColouredParticleSystem(void)
 {
+	for (int i = 0; i < particles.size(); ++i)
+	{
+		delete particles[i];
+	}
 }
 
 Vec3 ColouredParticleSystem::RandomVector(float maxLength)
@@ -46,7 +51,10 @@ void ColouredParticleSystem::Update(float msSinceLast)
 	}
 	for (int i = 0; i < particles.size(); ++i)
 	{	
-		particles[i]->AddForce(Vec3(0.0, -10.0f, 0.0)); //gravity
+		for (int j = 0; j < forces.size(); ++j)
+		{
+			forces[j]->ApplyForce(particles[i]);
+		}
 		ICollidable * coll;
 		if (coll = PhysicsSystem::GetCurrentInstance()->CollideWith(particles[i]->GetPosition()))
 		{

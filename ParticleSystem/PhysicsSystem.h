@@ -10,7 +10,12 @@ class PhysicsSystem
 {
 public:
 	~PhysicsSystem(void);
-	static PhysicsSystem * GetCurrentInstance();
+	inline static PhysicsSystem* GetCurrentInstance()
+	{
+		if (currentInstance == 0)
+			currentInstance = new PhysicsSystem();
+		return currentInstance;
+	}
 	void AddCollidable(ICollidable* obj);
 	ICollidable* CollideWith(Vec3 point);
 private:
