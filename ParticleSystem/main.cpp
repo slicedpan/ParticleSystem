@@ -32,7 +32,8 @@ float yMouse = (float)height / 2.0f;
 float dMouseX = 0.0f;
 float dMouseY = 0.0f;
 
-bool keystate[255];
+bool keystate[256];
+bool lastKeystate[256];
 
 // Bounds of viewing frustum.
 double nearPlane =  0.1f;
@@ -55,6 +56,8 @@ Plane * groundPlane;
 ColouredParticleSystem* particleSystem;
 Box * box;
 Box * box2;
+GravitationalForce* gravity;
+CentralForce* centralForce;
 
 // This function is called to display the scene.
 
@@ -71,9 +74,10 @@ void setup()
 	for (int i = 0; i < 255; ++i)
 	{
 		keystate[i] = false;
+		lastKeystate[i] = false;
 	}
 	glutSetCursor(GLUT_CURSOR_NONE);
-	groundPlane = new Plane(Vec3(0.0, 1.0, 0.0), Vec3(0.0, 0.0, 0.0));
+	groundPlane = new Plane(Vec3(0.0, 1.0, 0.2), Vec3(0.0, 0.0, 0.0));
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(groundPlane);
 	box = new Box(Vec3(0.0, 2.0, 10.0), Vec3(10.0, 4.0, 10.0));
 	box->Colour = Vec3(0.5, 0.0, 0.0);
@@ -82,8 +86,10 @@ void setup()
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(box);
 	PhysicsSystem::GetCurrentInstance()->AddCollidable(box2);
 	particleSystem = new ColouredParticleSystem(Vec3(0.0, 15.0, 0.0), Vec3(0.25f, 0.0, 0.0), Vec3(0.0, 0.2, 1.0), 2000, 115);
-	particleSystem->AddForce(new GravitationalForce(Vec3(0.0f, -10.0f, 0.0f)));
-	particleSystem->AddForce(new CentralForce(Vec3(0.0, 5.0, 10.0), 3.0f));	
+	gravity = new GravitationalForce(Vec3(0.0f, -10.0f, 0.0f));
+	centralForce = new CentralForce(Vec3(0.0, 5.0, 10.0), 3.0f);
+	particleSystem->AddForce(gravity);
+	particleSystem->AddForce(centralForce);	
 }
 
 int lastTime = 0;
@@ -170,10 +176,18 @@ void HandleInput()
 		cameraController->MoveDown();
 	}
 
+	if (keystate['g'] && !lastKeystate['g'])
+		gravity->ToggleActive();
+	if (keystate['h'] && !lastKeystate['h'])
+		centralForce->ToggleActive();
+
 	if (keystate[27])
 		exit(0);
 	if (keystate['h'])
 		int i = 0;
+
+	memcpy(lastKeystate, keystate, sizeof(bool) * 256);
+
 }
 
 // This function is called when there is nothing else to do.

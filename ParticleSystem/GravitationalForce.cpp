@@ -13,5 +13,7 @@ GravitationalForce::~GravitationalForce(void)
 
 void GravitationalForce::ApplyForce(Particle* particle)
 {
+	if (!active)
+		return;
 	particle->AddForce(direction * particle->mass);
 }

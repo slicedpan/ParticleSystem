@@ -13,5 +13,7 @@ CentralForce::~CentralForce(void)
 
 void CentralForce::ApplyForce(Particle* particle)
 {
+	if (!active)
+		return;
 	particle->AddForce((centre - particle->GetPosition()) * strength);
 }

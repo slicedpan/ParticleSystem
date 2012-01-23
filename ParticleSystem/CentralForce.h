@@ -7,8 +7,13 @@ class CentralForce : public IForceField
 public:
 	CentralForce(Vec3 centre, float strength);
 	~CentralForce(void);
-	void ApplyForce(Particle* particle);	
+	void ApplyForce(Particle* particle);
+	inline void ToggleActive()
+	{
+		active = !active;
+	}
 private:
+	bool active;
 	Vec3 centre;
 	float strength;
 };
